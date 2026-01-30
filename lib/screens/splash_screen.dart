@@ -81,7 +81,9 @@ class SplashScreen extends StatelessWidget {
 
             // Continue without login
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/homeScreen');
+              },
               child: const Text(
                 "Continue without login",
                 style: TextStyle(
