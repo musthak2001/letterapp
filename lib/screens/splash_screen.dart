@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Letter Generator',  // Header
+              'E-mail Generator',  // Header
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class SplashScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Generate professional letters easily',  // Subtitle
+              'Generate professional Gmails easily',  
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
