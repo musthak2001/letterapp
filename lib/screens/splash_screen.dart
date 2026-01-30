@@ -6,31 +6,89 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue.shade100,
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.deepPurple, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(
-              Icons.mail_outline,  // Envelope icon
-              size: 100,
-              color: Colors.blue,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'E-mail Generator',  // Header
+          children: [
+            const Icon(Icons.email, size: 120, color: Colors.white),
+            const SizedBox(height: 20),
+            const Text(
+              "AI Email Generator",
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: Colors.white,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
-              'Generate professional Gmails easily',  
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
+            const SizedBox(height: 15),
+            const Text(
+              "Generate professional emails instantly",
+              style: TextStyle(fontSize: 18, color: Colors.white70),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 50),
+
+            // Login Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Login",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+
+            // Register Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white70,
+                  foregroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Register",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+
+            // Continue without login
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                "Continue without login",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
           ],
