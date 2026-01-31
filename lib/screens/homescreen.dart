@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
+  String generatedEmail = '';
 
   // Controllers
   final TextEditingController recipientController = TextEditingController();
@@ -36,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(title: const Text("Generate Email")),
       body: SingleChildScrollView(
@@ -155,9 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // TODO: Send data to OpenAI API
                       String prompt =
                           """
 Email Type: $emailType
@@ -167,46 +166,28 @@ Key Points: ${keyPointsController.text}
 Tone: $tone
 Language: ${languageController.text}
 """;
-                      // For now, just show prompt in a dialog
+
+                      // loading
                       showDialog(
                         context: context,
-                        builder: (_) => AlertDialog(
-                          title: const Text("Generated Prompt"),
-                          content: Text(prompt),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text("OK"),
-                            ),
-                          ],
-                        ),
+                        barrierDismissible: false,
+                        builder: (_) =>
+                            const Center(child: CircularProgressIndicator()),
+                      );
+
+                      generatedEmail = await APIs.getAnswer(prompt);
+
+                      Navigator.pop(context); // close loading
+
+                      Navigator.pushNamed(
+                        context,
+                        '/output_screen',
+                        arguments: generatedEmail,
                       );
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-
-                  child: const Text(
-                    "Generate Email",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: null,
                 ),
-              ),
-              SizedBox(height: 20),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/LoadingPage');
-                },
-                child: Text("move to loading"),
               ),
             ],
           ),

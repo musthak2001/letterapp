@@ -16,26 +16,27 @@ class APIs {
         body: jsonEncode({
           "model": "gpt-5-nano",
           "input": [
-            {"role": "user", "content": prompt}
-          ]
+            {
+              "role": "user",
+              "content":
+                  "$prompt You are helpful email assistant.you should generate email according user requirments",
+            },
+          ],
         }),
       );
 
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
-
-        // Extract the generated text
-        final generatedText =
-            data['output']?[1]?['content']?[0]?['text'] ?? '';
+        final generatedText = data['output']?[1]?['content']?[0]?['text'] ?? '';
         return generatedText;
       } else {
         print('OpenAI API Error: ${res.statusCode}');
         print(res.body);
-        return 'Failed to generate text.';
+        return 'Failed to generate email.';
       }
     } catch (e) {
       print('Exception: $e');
-      return 'Error generating text.';
+      return 'Error generating email.';
     }
   }
 }
