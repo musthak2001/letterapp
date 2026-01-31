@@ -33,7 +33,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
+                    // ignore: deprecated_member_use
                     Colors.black.withOpacity(0.6),
+                    // ignore: deprecated_member_use
                     Colors.black.withOpacity(0.3),
                   ],
                   begin: Alignment.topCenter,
