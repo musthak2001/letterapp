@@ -1,53 +1,81 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-
-class LoadingScreen extends StatelessWidget {
+/// Loading Screen that shows a blurred background with a spinner and animated text.
+/// Automatically navigates to '/homeScreen' after 5 seconds.
+class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
 
   @override
+  State<LoadingScreen> createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // After 5 seconds, navigate to HomeScreen
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushReplacementNamed(context, '/homeScreen');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // 1️⃣ Blurred background
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.3),
-          ),
-        ),
-
-        // 2️⃣ Centered loading content
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Spinner
-              const CircularProgressIndicator(
-                color: Colors.blueAccent,
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background blur layer with gradient overlay
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0.3),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
-              const SizedBox(height: 20),
-
-              // Animated text
-              const AnimatedText(),
-            ],
+            ),
           ),
-        ),
-      ],
+
+          // Centered content: spinner + animated text
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                // Circular progress indicator
+                CircularProgressIndicator(
+                  color: Colors.deepPurpleAccent,
+                  strokeWidth: 4,
+                ),
+
+                SizedBox(height: 25),
+
+                // Animated loading text
+                AnimatedLoadingText(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class AnimatedText extends StatefulWidget {
-  const AnimatedText({super.key});
+/// Animated text that fades in and out to indicate loading
+class AnimatedLoadingText extends StatefulWidget {
+  const AnimatedLoadingText({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AnimatedTextState createState() => _AnimatedTextState();
+  State<AnimatedLoadingText> createState() => _AnimatedLoadingTextState();
 }
 
-class _AnimatedTextState extends State<AnimatedText>
+class _AnimatedLoadingTextState extends State<AnimatedLoadingText>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
@@ -56,16 +84,20 @@ class _AnimatedTextState extends State<AnimatedText>
   void initState() {
     super.initState();
 
+    // Animation controller to manage the fade effect
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     )..repeat(reverse: true);
 
-    _opacityAnimation = Tween(begin: 0.3, end: 1.0).animate(_controller);
+    // Tween animation from 0.4 to 1.0 opacity
+    _opacityAnimation =
+        Tween<double>(begin: 0.4, end: 1.0).animate(_controller);
   }
 
   @override
   void dispose() {
+    // Dispose controller to free resources
     _controller.dispose();
     super.dispose();
   }
@@ -75,11 +107,12 @@ class _AnimatedTextState extends State<AnimatedText>
     return FadeTransition(
       opacity: _opacityAnimation,
       child: const Text(
-        'Generating email...',
+        'Generating your email...',
         style: TextStyle(
           color: Colors.white,
           fontSize: 18,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
         ),
       ),
     );

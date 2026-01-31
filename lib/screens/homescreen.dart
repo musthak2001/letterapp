@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,22 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
     'Informal',
     'Complaint',
     'Request',
-    'Leave Email'
+    'Leave Email',
   ];
 
-  final List<String> tones = [
-    'Professional',
-    'Friendly',
-    'Polite',
-    'Strict'
-  ];
+  final List<String> tones = ['Professional', 'Friendly', 'Polite', 'Strict'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Generate Email"),
-      ),
+      appBar: AppBar(title: const Text("Generate Email")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -49,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Email Type Dropdown
               const Text(
                 "Email Type *",
@@ -57,13 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 5),
               DropdownButtonFormField<String>(
-                value: emailType,
+                initialValue: emailType,
                 hint: const Text("Select Email Type"),
                 items: emailTypes
-                    .map((type) => DropdownMenuItem(
-                          value: type,
-                          child: Text(type),
-                        ))
+                    .map(
+                      (type) =>
+                          DropdownMenuItem(value: type, child: Text(type)),
+                    )
                     .toList(),
                 onChanged: (val) => setState(() => emailType = val),
                 validator: (value) =>
@@ -128,16 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 5),
               DropdownButtonFormField<String>(
-                value: tone,
+                initialValue: tone,
                 hint: const Text("Select Tone"),
                 items: tones
-                    .map((t) => DropdownMenuItem(
-                          value: t,
-                          child: Text(t),
-                        ))
+                    .map((t) => DropdownMenuItem(value: t, child: Text(t)))
                     .toList(),
                 onChanged: (val) => setState(() => tone = val),
-                validator: (value) => value == null ? "Please select tone" : null,
+                validator: (value) =>
+                    value == null ? "Please select tone" : null,
               ),
               const SizedBox(height: 20),
 
@@ -164,7 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // TODO: Send data to OpenAI API
-                      String prompt = """
+                      String prompt =
+                          """
 Email Type: $emailType
 Recipient: ${recipientController.text}
 Subject: ${subjectController.text}
@@ -182,7 +175,7 @@ Language: ${languageController.text}
                             TextButton(
                               onPressed: () => Navigator.pop(context),
                               child: const Text("OK"),
-                            )
+                            ),
                           ],
                         ),
                       );
@@ -194,13 +187,25 @@ Language: ${languageController.text}
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
+
                   child: const Text(
                     "Generate Email",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
+              SizedBox(height: 20),
 
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/LoadingPage');
+                },
+                child: Text("move to loading"),
+              ),
             ],
           ),
         ),
