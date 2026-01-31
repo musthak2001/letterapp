@@ -49,7 +49,9 @@ class SplashScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login_screen');
+                },
                 child: const Text(
                   "Login",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -71,7 +73,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/TestApp');
+                  Navigator.pushNamed(context, '/register_screen');
                 },
                 child: const Text(
                   "Register",
