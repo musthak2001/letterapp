@@ -38,7 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Generate Email")),
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+
+        title: const Text(
+          "Generate Email",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -157,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      // Combine input into prompt
                       String prompt =
                           """
 Email Type: $emailType
@@ -167,18 +179,24 @@ Tone: $tone
 Language: ${languageController.text}
 """;
 
-                      // loading
+                      // Show loading
                       showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (_) =>
-                            const Center(child: CircularProgressIndicator()),
+                        builder: (_) => const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.deepPurple,
+                          ),
+                        ),
                       );
 
-                      generatedEmail = await APIs.getAnswer(prompt);
+                      // Call API
+                      String generatedEmail = await APIs.getAnswer(prompt);
 
-                      Navigator.pop(context); // close loading
+                      // Close loading
+                      Navigator.pop(context);
 
+                      // Navigate to output screen
                       Navigator.pushNamed(
                         context,
                         '/output_screen',
@@ -186,7 +204,21 @@ Language: ${languageController.text}
                       );
                     }
                   },
-                  child: null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 4,
+                  ),
+                  child: const Text(
+                    "Generate Email",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
