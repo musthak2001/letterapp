@@ -17,24 +17,29 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmpasswordController = TextEditingController();
 
   void signup() async {
-    final email = _emailController.text;
+    final email = _emailController.text.trim();
     final password = _passwordController.text;
     final confirmpassword = _confirmpasswordController.text;
 
     if (password != confirmpassword) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("passwords not matched")));
+      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
       return;
     }
 
     try {
       await authService.SignUpwithEmailPassword(email, password);
+
+      // ✅ Navigate using pushNamed
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/login_screen');
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("Error :$e")));
+        ).showSnackBar(SnackBar(content: Text("Error: $e")));
       }
     }
   }

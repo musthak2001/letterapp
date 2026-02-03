@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
+        
         '/': (context) => const SplashScreen(),
         '/homeScreen': (context) => const HomeScreen(),
 
