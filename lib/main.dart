@@ -5,19 +5,24 @@ import 'screens/homescreen.dart';
 import 'screens/output_screen.dart';
 
 import 'pages/login_page.dart';
-import 'pages/profile_page.dart';
-import 'pages/register_page.dart';
-
+import 'package:letterapp/pages/register_page.dart';
 import 'screens/testapi.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // load .env file
+  await dotenv.load(fileName: ".env");
+
   await Supabase.initialize(
-    url: 'https://laqgpzqdgbtefjwqxbqf.supabase.co',
-    anonKey: 'sb_publishable_qPPjxfNLkMFMT8KMUB9Rng_0__fXJfv',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
+
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -35,6 +40,8 @@ class MyApp extends StatelessWidget {
 
         '/login_screen': (context) => const LoginPage(),
         '/register_screen': (context) => const RegisterPage(),
+        '/profile_screen': (context) => const RegisterPage(),
+
       }, // Only splash screen for now
     );
   }
