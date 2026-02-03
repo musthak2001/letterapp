@@ -49,3 +49,15 @@ app.*.map.json
 # Ignore API key file
 lib/helper/global.dart
 
+# Flutter/Dart generated files
+.dart_tool/
+.build/
+.flutter-plugins
+.packages
+.pub-cache/
+pubspec.lock
+
+# Flutter generated platform files
+linux/flutter/generated_*
+windows/flutter/generated_*
+macos/Flutter/GeneratedPluginRegistrant.swift

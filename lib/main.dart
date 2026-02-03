@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letterapp/pages/profile_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'screens/splash_screen.dart';
 import 'screens/homescreen.dart';
@@ -8,6 +9,7 @@ import 'pages/login_page.dart';
 import 'package:letterapp/pages/register_page.dart';
 import 'screens/testapi.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
 
         '/login_screen': (context) => const LoginPage(),
         '/register_screen': (context) => const RegisterPage(),
-        '/profile_screen': (context) => const RegisterPage(),
+        '/profile_screen': (context) => const ProfilePage(),
 
       }, // Only splash screen for now
     );
