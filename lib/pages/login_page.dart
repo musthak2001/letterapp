@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
       // Navigate to profile using named route
       if (mounted) {
-        Navigator.pushReplacementNamed(context, '/profile_screen');
+        Navigator.pushReplacementNamed(context, '/homeScreen');
       }
     } catch (e) {
       if (mounted) {

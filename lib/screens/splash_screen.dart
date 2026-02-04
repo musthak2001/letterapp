@@ -84,19 +84,19 @@ class SplashScreen extends StatelessWidget {
             const SizedBox(height: 15),
 
             // Continue without login
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/homeScreen');
-              },
-              child: const Text(
-                "Continue without login",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/homeScreen');
+            //   },
+            //   child: const Text(
+            //     "Continue without login",
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: 16,
+            //       decoration: TextDecoration.underline,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -1,6 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:letterapp/api/apis.dart';
+
+import 'package:letterapp/auth/auth_service.dart';
+import 'package:letterapp/screens/splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +12,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AuthService authService = AuthService();
+
+  void logout() async {
+    await authService.signOut();
+
+    if (!mounted) return;
+
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
   final _formKey = GlobalKey<FormState>();
   String generatedEmail = '';
 
@@ -39,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-
         title: const Text(
           "Generate Email",
           style: TextStyle(
@@ -48,7 +59,15 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            onPressed: logout,
+            tooltip: 'Logout',
+          ),
+        ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
